@@ -178,14 +178,50 @@ class Conica {
   List get focos {
     if (!_validMore) throw 'Cônica Inválida';
     if (tipo == ConicaTypes.elipse) {
-      var A = sqrt(-f / a);
-      var B = sqrt(-f / c);
-      var C = A-B;
-      if(C>A){
-        return [[0,-A],[0,A]];
+      var A = -f / a;
+      var B = -f / c;
+      var C = A - B;
+
+      C = sqrt(C);
+
+      A = sqrt(A);
+
+      if (C > A) {
+        return [
+          [0, -A],
+          [0, A]
+        ];
       }
-      return [[-C,0],[C,0]];
+      return [
+        [-C, 0],
+        [C, 0]
+      ];
+    }
+    if (tipo == ConicaTypes.hiperbole) {
+      var A = -f / a;
+      var B = -f / c;
+      var C = A - B;
+
+      C = sqrt(C);
+
+      A = sqrt(A);
+
+      if (C > A) {
+        return [
+          [0, -A],
+          [0, A]
+        ];
       }
+      return [
+        [-C, 0],
+        [C, 0]
+      ];
+    }
+  }
+
+  List get centro {
+    if (!_validMore) throw 'Cônica Inválida';
+    return [0, 0];
   }
 
   @override

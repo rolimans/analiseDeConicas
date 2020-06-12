@@ -10,13 +10,13 @@ import 'package:farid/conica.dart';
 4. Obter os dados geométricos da cônica nos casos da elipse, hipérbole, parábola, isto é, determinar as coordenadas dos focos, 
 centro, vértices, equações das assíntotas (no caso da hipérbole), equação do eixo (no caso da parábola)
 
-5. Fazer o upload do código no Tidia.
 */
 void main(List<String> arguments) {
-  var tst = Conica(a: 1, b: 0, c: 2, d: 0, e: 0, f: -3);
+  var tst = Conica(a: 1, b: 0, c: 0, d: 2, e: 4, f: 0);
 
   print(tst);
-  tst = tst.cancelLinear;
+  if(tst.canCancelLinear)
+    tst = tst.cancelLinear;
 
   print(tst);
   tst = tst.cancelMulti;

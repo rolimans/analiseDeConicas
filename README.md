@@ -1,5 +1,7 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+Um desastre aconteceu, o que restou foi isso
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+
+
+Faltou:
+4. Obter os dados geométricos da cônica nos casos da elipse, hipérbole, parábola, isto é, determinar as coordenadas dos focos, 
+centro, vértices, equações das assíntotas (no caso da hipérbole), equação do eixo (no caso da parábola)
