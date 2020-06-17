@@ -156,6 +156,9 @@ class Conica {
           return ConicaTypes.hiperbole;
         } else {
           if ((f > 0 && a < 0) || (f < 0 && a > 0)) {
+            if(a==c){
+              return ConicaTypes.circulo;
+            }
             return ConicaTypes.elipse;
           } else {
             return ConicaTypes.vazia;
@@ -198,8 +201,22 @@ class Conica {
       ];
     }
     if (tipo == ConicaTypes.hiperbole) {
-      var A = -f / a;
-      var B = -f / c;
+      if (a > 0) {
+        var A = -f / a;
+        var B = -f / c;
+        var C = A - B;
+
+        C = sqrt(C);
+
+        A = sqrt(A);
+
+        return [
+          [-C, 0],
+          [C, 0]
+        ];
+      }
+      var A = -f / c;
+      var B = -f / a;
       var C = A - B;
 
       C = sqrt(C);
@@ -208,19 +225,209 @@ class Conica {
 
       if (C > A) {
         return [
-          [0, -A],
-          [0, A]
+          [0, -C],
+          [0, C]
+        ];
+      }
+    }
+
+    if (tipo == ConicaTypes.parabola) {
+      if (a != 0) {
+        var vs = vertices;
+        var H = vs[0];
+        var K = vs[1];
+
+        var A = ((f / -e) - K) / pow(H, 2);
+
+        return [H, K + (1 / (4 * A))];
+      }
+      if (c != 0) {
+        var vs = vertices;
+        var H = vs[0];
+        var K = vs[1];
+
+        var A = ((f / -d) - H) / pow(K, 2);
+
+        return [H + (1 / (4 * A)), K];
+      }
+    }
+  }
+
+  List get vertices {
+    if (!_validMore) throw 'Cônica Inválida';
+    if (tipo == ConicaTypes.elipse) {
+      var A = -f / a;
+      var B = -f / c;
+      var C = A - B;
+
+      C = sqrt(C);
+
+      A = sqrt(A);
+
+      B = sqrt(B);
+
+      if (C > A) {
+        return [
+          [-C, 0],
+          [C, 0],
+          [0, B],
+          [0, -B]
         ];
       }
       return [
-        [-C, 0],
-        [C, 0]
+        [-A, 0],
+        [A, 0],
+        [0, B],
+        [0, -B]
       ];
     }
+    if (tipo == ConicaTypes.hiperbole) {
+      if (a > 0) {
+        var A = -f / a;
+        var B = -f / c;
+        var C = A - B;
+
+        C = sqrt(C);
+
+        A = sqrt(A);
+
+        return [
+          [-A, 0],
+          [A, 0]
+        ];
+      }
+
+      var A = -f / c;
+      var B = -f / a;
+      var C = A - B;
+
+      C = sqrt(C);
+
+      A = sqrt(A);
+
+      return [
+        [0, -A],
+        [0, A]
+      ];
+    }
+    if (tipo == ConicaTypes.parabola) {
+      if (a != 0) {
+        var A = a / -e;
+        var B = d / -e;
+        var C = f / -e;
+
+        var H = -B / (2 * A);
+
+        var K = -delta(A, B, C) / (4 * A);
+
+        return [H, K];
+      }
+      if (c != 0) {
+        var A = c / -d;
+        var B = e / -d;
+        var C = f / -d;
+        //x=h y=k
+
+        var K = -B / (2 * A);
+
+        var H = -delta(A, B, C) / (4 * A);
+
+        return [H, K];
+      }
+    }
+  }
+
+  String get eixo {
+    if (!hasEixo) throw 'Cônica Inválida';
+
+    if (a != 0) {
+      var aux = vertices[0];
+      return 'x = $aux';
+    }
+
+    var aux = vertices[1];
+    return 'y = $aux';
+  }
+
+  bool get hasEixo {
+    return tipo == ConicaTypes.parabola;
+  }
+
+  bool get hasCenter {
+    return tipo == ConicaTypes.hiperbole || tipo == ConicaTypes.elipse;
+  }
+
+  bool get hasMore {
+    return _validMore;
+  }
+
+  bool get hasAssintota {
+    return tipo == ConicaTypes.hiperbole;
+  }
+
+  String get tipoStr {
+    switch (tipo) {
+      case ConicaTypes.parabola:
+        return 'Parábola';
+      case ConicaTypes.elipse:
+        return 'Elipse';
+      case ConicaTypes.hiperbole:
+        return 'Hipérbole';
+      case ConicaTypes.circulo:
+        return 'Círculo';
+      case ConicaTypes.vazia:
+        return 'Cônica Vazia';
+      case ConicaTypes.ponto:
+        return 'Ponto';
+      case ConicaTypes.retas_concorrentes:
+        return 'Retas Concorrentes';
+      case ConicaTypes.retas_identicas:
+        return 'Retas Coincidentes';
+      case ConicaTypes.retas_paralelas:
+        return 'Retas Paralelas';
+    }
+  }
+
+  List get assintotas {
+    if (!hasAssintota) throw 'Cônica Inválida';
+    if (a > 0) {
+      var A = -f / a;
+      var B = -f / c;
+      var C = A - B;
+
+      if (B < 0) B = -B;
+
+      C = sqrt(C);
+
+      A = sqrt(A);
+
+      B = sqrt(B);
+
+      var aux = B / A;
+
+      return ['y = $aux x', 'y = ${-aux} x'];
+    }
+
+    var A = -f / c;
+    var B = -f / a;
+    var C = A - B;
+
+    if (B < 0) B = -B;
+
+    C = sqrt(C);
+
+    A = sqrt(A);
+
+    B = sqrt(B);
+
+    var aux = A / B;
+
+    return ['y = $aux x', 'y = ${-aux} x'];
   }
 
   List get centro {
     if (!_validMore) throw 'Cônica Inválida';
+    if (tipo == ConicaTypes.parabola) throw 'Não se aplica';
     return [0, 0];
   }
 

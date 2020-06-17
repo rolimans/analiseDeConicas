@@ -47,3 +47,8 @@ num determinanteDoisPorDois(List<List<num>> m) {
 num angleFromCot(num cot){
   return atan(1/cot);
 }
+
+num delta(a,b,c){
+  b = pow(b,2);
+  return b - (4*a*c);
+}
