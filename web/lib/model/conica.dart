@@ -78,9 +78,23 @@ class Conica {
     }
 
     if (hasInfSolutions) {
-      var sis = [a, b / 2, -d / 2];
-      translacaoFactor = [1];
-      translacaoFactor.add((sis[2] - sis[0]) / sis[1]);
+      if (a != 0) {
+        var sis = [a, b / 2, -d / 2];
+        if (sis[1] == 0) {
+          translacaoFactor = [(sis[2] - sis[0]), 0];
+        } else {
+          translacaoFactor = [1];
+          translacaoFactor.add((sis[2] - sis[0]) / sis[1]);
+        }
+      } else {
+        var sis = [b / 2, c, -e / 2];
+        if (sis[1] == 0) {
+          translacaoFactor = [(sis[2] - sis[0]), 0];
+        } else {
+          translacaoFactor = [1];
+          translacaoFactor.add((sis[2] - sis[0]) / sis[1]);
+        }
+      }
     } else {
       var sisVar = [
         [a, b / 2],
@@ -244,7 +258,7 @@ class Conica {
         var H = vs[0];
         var K = vs[1];
 
-        var A = ((f / -e) - K) / pow(H, 2);
+        var A = a / -e;
 
         return [H, K + (1 / (4 * A))];
       }
@@ -253,7 +267,7 @@ class Conica {
         var H = vs[0];
         var K = vs[1];
 
-        var A = ((f / -d) - H) / pow(K, 2);
+        var A = a / -d;
 
         return [H + (1 / (4 * A)), K];
       }
