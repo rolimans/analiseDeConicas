@@ -3,24 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="App para análise de cônicas">
 
+  <meta name="theme-color" content="#E91E63"/>
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="analiseDeConicasWeb">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#E91E63">
+  <meta name="apple-mobile-web-app-title" content="Análise de Cônicas">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 
-  <title>analiseDeConicasWeb</title>
+  <title>Análise de Cônicas</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    function plot(a,b,c,d,e,f){
+      var f = '('+a+'*x^2) +('+b+'*x*y) + ('+c+'*y^2)+('+d+'*x)+('+e+'*y)+('+f+'*1)';
+      document.getElementsByTagName('flt-platform-view')[0].shadowRoot.getElementById('plot').contentWindow.postMessage([{
+          fn: f,
+          color: 'red',
+          fnType: 'implicit'
+        }],'*')
+    }
+    function plot2(a,b,c,d,e,f,assint1,assint2,eixo){
+      var fx = '('+a+'*x^2) +('+b+'*x*y) + ('+c+'*y^2)+('+d+'*x)+('+e+'*y)+('+f+'*1)';
+
+      var data = [{
+          fn: fx,
+          color: 'blue',
+          fnType: 'implicit'
+        }];
+
+      if(assint1!==null && assint2!=null){
+        data.push({fn: assint1,
+          color: 'green'});
+        data.push({fn: assint2,
+        color: 'orange'});
+      }
+
+      if(eixo!==null){
+        var isX = eixo.includes('x');
+        eixo = eixo.split("=")[1];
+        if(isX){
+          eixo = '-x + '+eixo;
+        }
+        var obj = {fn:eixo, color: 'green'};
+        if(isX){
+          obj.fnType = 'implicit';
+        }
+        data.push(obj);
+      }
+
+      document.getElementsByTagName('flt-platform-view')[1].shadowRoot.getElementById('plot2').contentWindow.postMessage(data,'*')
+    }
+  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {

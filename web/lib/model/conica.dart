@@ -412,7 +412,10 @@ class Conica {
 
       var aux = B / A;
 
-      return ['y = $aux x', 'y = ${-aux} x'];
+      return [
+        'y = ${num.parse(aux.toStringAsFixed(4))} x',
+        'y = ${num.parse((-aux).toStringAsFixed(4))} x'
+      ];
     }
 
     var A = -f / c;
@@ -440,12 +443,36 @@ class Conica {
 
   @override
   String toString() {
-    var str = a != 0 ? a > 0 ? '+$a x² ' : '$a x² ' : '';
-    str += b != 0 ? b > 0 ? '+$b xy ' : '$b xy ' : '';
-    str += c != 0 ? c > 0 ? '+$c y² ' : '$c y² ' : '';
-    str += d != 0 ? d > 0 ? '+$d x ' : '$d x ' : '';
-    str += e != 0 ? e > 0 ? '+$e y ' : '$e y ' : '';
-    str += f != 0 ? f > 0 ? '+$f ' : '$f ' : '';
+    var str = a != 0
+        ? a > 0
+            ? '+${num.parse(a.toStringAsFixed(4))} x² '
+            : '${num.parse(a.toStringAsFixed(4))} x² '
+        : '';
+    str += b != 0
+        ? b > 0
+            ? '+${num.parse(b.toStringAsFixed(4))} xy '
+            : '${num.parse(b.toStringAsFixed(4))} xy '
+        : '';
+    str += c != 0
+        ? c > 0
+            ? '+${num.parse(c.toStringAsFixed(4))} y² '
+            : '${num.parse(c.toStringAsFixed(4))} y² '
+        : '';
+    str += d != 0
+        ? d > 0
+            ? '+${num.parse(d.toStringAsFixed(4))} x '
+            : '${num.parse(d.toStringAsFixed(4))} x '
+        : '';
+    str += e != 0
+        ? e > 0
+            ? '+${num.parse(e.toStringAsFixed(4))} y '
+            : '${num.parse(e.toStringAsFixed(4))} y '
+        : '';
+    str += f != 0
+        ? f > 0
+            ? '+${num.parse(f.toStringAsFixed(4))} '
+            : '${num.parse(f.toStringAsFixed(4))} '
+        : '';
     return str;
   }
 }

@@ -44,7 +44,7 @@ void main(List<String> arguments) {
 
     conica = conica.cancelMulti;
 
-    print('Cônica simples: $conica.');
+    print('Cônica Simplificada: $conica.');
 
     print('Tipo da Cônica: ${conica.tipoStr}');
 

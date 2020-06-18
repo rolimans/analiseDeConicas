@@ -53,6 +53,7 @@ num delta(a,b,c){
   return b - (4*a*c);
 }
 
+
 num mod(num a){
   if(a>=0) return a;
   return -a;
